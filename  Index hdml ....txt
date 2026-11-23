@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Queen ❤️</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background-color: #1a0b1c;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #top-heading {
+            color: #ffccd5;
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 0 0 20px #ff4d6d;
+            margin-bottom: 50px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d; }
+            to { text-shadow: 0 0 20px #ff758f, 0 0 40px #ff758f; }
+        }
+
+        #interactive-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #interactive-container:hover {
+            transform: scale(1.05);
+        }
+
+        .heart {
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d6d;
+            position: relative;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 30px #ff758f;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before { top: -60px; left: 0; }
+        .heart::after { top: 0; left: 60px; }
+
+        .instruction {
+            margin-top: 50px;
+            color: #ffccd5;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .finger-icon {
+            font-size: 2rem;
+            display: inline-block;
+            animation: pointUp 1s infinite alternate;
+        }
+
+        @keyframes pointUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        #message-screen {
+            position: absolute;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #typing-text {
+            color: #ffe5ec;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.3rem;
+            background-color: #ff758f;
+            animation: blink 0.8s infinite;
+            vertical-align: -2px;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="top-heading">Happy birthday Ayesha</h1>
+
+    <div id="interactive-container" onclick="startOpenSequence()">
+        <div class="heart"></div>
+        <div class="instruction">
+            <span class="finger-icon">👆</span> Tap to Open
+        </div>
+    </div>
+
+    <div id="message-screen">
+        <div id="typing-text"></div><div class="cursor"></div>
+    </div>
+
+    <script>
+        const interactiveContainer = document.getElementById('interactive-container');
+        const topHeading = document.getElementById('top-heading');
+        const messageScreen = document.getElementById('message-screen');
+        const typingText = document.getElementById('typing-text');
+
+        const message = `Happy birthday my dear wife ❤️
+
+Happppppyyyyy walllllaaaaaa Birthhhhhdaayyyyyyy my sweet wife ...
+
+To aj wo din ha jab ak shehzaaadiiii utri thi asman sy... or wo ha Mera pora jhan, Meri Zindagi, Meri friend, Mera Pyar, Meri muhabat, Mera ishq, Mera sakoon.
+
+Allah Meri pyari si jan je ko lambi Zindagi ata farmaye aur dhear sari khushiyan ata kary, aur har wo cheez jo ap chahti ho. Aur Allah mera ap k sath hamesha kiyamat tak rakhy. Ameen summa Ameen. ❤️
+
+Once again..
+Happy birthday!
+Happppppyyyyy walllllaaaaaa Happy birthday!
+
+To the Queen Of My Heart, Woman Of My Dreams And The Love Of My Life... 👑
+
+On your birthday I wish that Allah bless you with good luck, happiness, love, good health and success in every walk of your life, you truly deserve it.
+
+Wishing you a very happy birthday sweetheart! You are the love of my life, looking forward to every moment with you. ❤️`;
+
+        function startOpenSequence() {
+            interactiveContainer.style.transition = 'all 0.8s ease';
+            interactiveContainer.style.transform = 'scale(2)';
+            interactiveContainer.style.opacity = '0';
+
+            setTimeout(() => {
+                interactiveContainer.style.display = 'none';
+                topHeading.style.display = 'none';
+                messageScreen.style.opacity = '1';
+                messageScreen.style.pointerEvents = 'auto';
+                startTyping();
+            }, 800);
+        }
+
+        let charIndex = 0;
+        function startTyping() {
+            if (charIndex < message.length) {
+                typingText.textContent += message.charAt(charIndex);
+                charIndex++;
+                setTimeout(startTyping, 40);
+            }
+        }
+    </script>
+</body>
+</html>
